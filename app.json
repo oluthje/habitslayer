@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "TestProject",
-    "slug": "TestProject",
+    "name": "HabitSlayer",
+    "slug": "HabitSlayer",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ]
   },
-  "name": "TestProject"
+  "name": "HabitSlayer"
 }
