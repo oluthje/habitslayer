@@ -1,13 +1,17 @@
 import { StatusBar } from 'expo-status-bar'
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native'
-import HabitChecker from "./components/HabitChecker"
 import AddHabitModal from "./components/AddHabitModal"
+import HabitList from "./components/HabitList"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function App() {
   const [habits, setHabits] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
+
+  useEffect(() => {
+    getHabits()
+  }, [])
 
   const getHabits = async (value) => {
     try {
@@ -17,8 +21,7 @@ export default function App() {
         setHabits(parsedValue)
       }
     } catch(e) {
-      console.log("error in getData")
-      console.log(e)
+      // error
     }
   }
 
@@ -27,8 +30,7 @@ export default function App() {
       const jsonValue = JSON.stringify(value)
       await AsyncStorage.setItem('@habits', jsonValue)
     } catch (e) {
-      console.log("error in saveHabit")
-      console.log(e)
+      // error
     }
   }
 
@@ -37,18 +39,18 @@ export default function App() {
     saveHabits([...habits, habit])
   }
 
-  useEffect(() => {
-    getHabits()
-  }, [])
+  const handleRemoveHabit = (habit) => {
+    const new_habits = habits.filter(item => item !== habit)
+    setHabits(new_habits)
+    saveHabits(new_habits)
+  }
 
   const clearAll = async () => {
     try {
       await AsyncStorage.clear()
     } catch(e) {
-      // clear error
+      // error
     }
-
-    console.log('Done.')
   }
 
   return (
@@ -57,25 +59,9 @@ export default function App() {
 
       <AddHabitModal visible={modalVisible} onClose={() => setModalVisible(!modalVisible)} onAddHabit={addHabit}/>
 
-      <HabitList habits={habits}/>
-
       <Button onPress={() => setModalVisible(!modalVisible)} title="Add Habit"></Button>
-    </View>
-  );
-}
 
-function HabitList(props) {
-  const habits = props.habits
-  console.log(habits)
-
-  return (
-    <View>
-      <FlatList
-        data={habits}
-        renderItem={({item, index}) => (
-          <HabitChecker key={index} name={item}/>
-        )}
-      />
+      <HabitList habits={habits} onRemoveHabit={handleRemoveHabit}/>
     </View>
   )
 }
@@ -86,12 +72,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#ebebf0',
     marginTop: StatusBar.currentHeight || 80,
   },
-  input: {
-    height: 40,
-    width: 300,
-    margin: 12,
-    marginTop: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});
+})

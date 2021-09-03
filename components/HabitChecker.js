@@ -47,14 +47,14 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   textStyle: {
-    fontWeight: "bold"
+    //fontWeight: "bold"
   },
   textUnselected: {
     textDecorationLine: 'line-through',
-    fontWeight: "bold"
+    //fontWeight: "bold"
   },
   textSelected: {
-    fontWeight: "bold"
+    //fontWeight: "bold"
   }
   // button: {
   //   alignItems: "center",
