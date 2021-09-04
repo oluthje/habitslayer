@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native'
 import AddHabitModal from "./components/AddHabitModal"
 import HabitList from "./components/HabitList"
+import CalendarView from "./components/CalendarView"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function App() {
@@ -62,6 +63,8 @@ export default function App() {
       <Button onPress={() => setModalVisible(!modalVisible)} title="Add Habit"></Button>
 
       <HabitList habits={habits} onRemoveHabit={handleRemoveHabit}/>
+
+      <CalendarView/>
     </View>
   )
 }
