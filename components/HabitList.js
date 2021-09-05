@@ -17,16 +17,19 @@ import { SwipeListView } from 'react-native-swipe-list-view'
 export default function HabitList(props) {
   var animationIsRunning = false
   const habits = props.habits
+  const habits_length = habits ? habits.length : 0
   const [listData, setListData] = useState()
   const rowTranslateAnimatedValues = {}
-  Array(habits.length)
+  Array(habits_length)
     .fill('')
     .forEach((_, i) => {
         rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1)
     })
 
   useEffect(() => {
-    createListData(habits)
+    if (habits) {
+      createListData(habits)
+    }
   }, [habits])
 
   const createListData = habits => {
@@ -34,7 +37,7 @@ export default function HabitList(props) {
       key: `${index}`,
       title: habit,
     })))
-    Array(habits.length)
+    Array(habits_length)
       .fill('')
       .forEach((_, i) => {
           rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1)
