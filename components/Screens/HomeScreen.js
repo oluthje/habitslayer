@@ -21,7 +21,7 @@ export default function HomeScreen(props) {
 
       <Button onPress={() => setModalVisible(!modalVisible)} title="Add Habit"></Button>
 
-      <CalendarView/>
+      <CalendarView date={commonProps.date} setDate={commonProps.setDate} />
     </View>
   )
 }

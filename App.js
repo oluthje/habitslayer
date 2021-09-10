@@ -11,6 +11,7 @@ const Tab = createBottomTabNavigator()
 
 export default function App() {
   const [habits, setHabits] = useState([])
+  const [date, setDate] = useState('2021-09-16')
 
   useEffect(() => {
     getHabits()
@@ -79,7 +80,14 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Tabs habits={habits} onAddHabit={addHabit} onRemoveHabit={handleRemoveHabit} onUpdateHabit={handleUpdateHabit} />
+      <Tabs
+        habits={habits}
+        date={date}
+        setDate={setDate}
+        onAddHabit={addHabit}
+        onRemoveHabit={handleRemoveHabit}
+        onUpdateHabit={handleUpdateHabit}
+      />
     </NavigationContainer>
   )
 }
@@ -87,6 +95,8 @@ export default function App() {
 function Tabs(props) {
   const commonProps = {
     habits: props.habits,
+    date: props.date,
+    setDate: props.setDate,
     onAddHabit: props.onAddHabit,
     onRemoveHabit: props.onRemoveHabit,
     onUpdateHabit: props.onUpdateHabit
