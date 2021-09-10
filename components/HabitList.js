@@ -31,13 +31,13 @@ export default function HabitList(props) {
     if (habits) {
       createListData(habits)
     }
-  }, [habits])
+  }, [habits, props.date])
 
   const createListData = habits => {
     setListData(habits.map((habit, index) => ({
       key: `${index}`,
       name: habit.name,
-      completed: habit.completed
+      completed: habit.dates_completed.includes(props.date)
     })))
     Array(habits_length)
       .fill('')
@@ -83,7 +83,7 @@ export default function HabitList(props) {
           underlayColor={'#AAA'}
         >
           <View>
-            <Text>{props.item.name} {props.item.completed ? "completed" : "uncompleted"}</Text>
+            <Text>{props.item.name} {props.item.completed ? "DONE" : ""}</Text>
           </View>
         </TouchableHighlight>
       </Animated.View>

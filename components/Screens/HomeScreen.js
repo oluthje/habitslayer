@@ -14,13 +14,18 @@ export default function HomeScreen(props) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-
-      <AddHabitModal visible={modalVisible} onClose={() => setModalVisible(!modalVisible)} onAddHabit={commonProps.onAddHabit}/>
-
-      <HabitList habits={habits} onRemoveHabit={commonProps.onRemoveHabit} onUpdateHabit={commonProps.onUpdateHabit}/>
-
+      <AddHabitModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(!modalVisible)}
+        onAddHabit={commonProps.onAddHabit}
+      />
+      <HabitList
+        habits={habits}
+        date={commonProps.date}
+        onRemoveHabit={commonProps.onRemoveHabit}
+        onUpdateHabit={commonProps.onUpdateHabit}
+      />
       <Button onPress={() => setModalVisible(!modalVisible)} title="Add Habit"></Button>
-
       <CalendarView date={commonProps.date} setDate={commonProps.setDate} />
     </View>
   )

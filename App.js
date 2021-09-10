@@ -41,7 +41,7 @@ export default function App() {
   const addHabit = (name) => {
     let habit = {
       name: name,
-      completed: false
+      dates_completed: []
     }
     setHabits([...habits, habit])
     saveHabits([...habits, habit])
@@ -58,7 +58,16 @@ export default function App() {
 
     let newHabits = [...habits]
     let habit = newHabits[index]
-    habit.completed = !habit.completed
+
+    if (habit.dates_completed.includes(date)) {
+      const index = habit.dates_completed.indexOf(date)
+      if (index > -1) {
+        habit.dates_completed.splice(index, 1);
+      }
+    } else {
+      habit.dates_completed.push(date)
+    }
+
     newHabits[key] = habit
     setHabits(newHabits)
     saveHabits(newHabits)
