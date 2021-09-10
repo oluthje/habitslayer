@@ -37,9 +37,30 @@ export default function App() {
     }
   }
 
-  const addHabit = (habit) => {
-    setHabits(habits => [...habits, habit])
+  const addHabit = (name) => {
+    let habit = {
+      name: name,
+      completed: false
+    }
+    setHabits([...habits, habit])
     saveHabits([...habits, habit])
+  }
+
+  const handleUpdateHabit = (name) => {
+    var index = 0
+    for (var key in habits) {
+      if (habits[key].name == name) {
+        index = key
+        break
+      }
+    }
+
+    let newHabits = [...habits]
+    let habit = newHabits[index]
+    habit.completed = !habit.completed
+    newHabits[key] = habit
+    setHabits(newHabits)
+    saveHabits(newHabits)
   }
 
   const handleRemoveHabit = (habit) => {
@@ -58,7 +79,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Tabs habits={habits} onAddHabit={addHabit} onRemoveHabit={handleRemoveHabit} />
+      <Tabs habits={habits} onAddHabit={addHabit} onRemoveHabit={handleRemoveHabit} onUpdateHabit={handleUpdateHabit} />
     </NavigationContainer>
   )
 }
@@ -68,6 +89,7 @@ function Tabs(props) {
     habits: props.habits,
     onAddHabit: props.onAddHabit,
     onRemoveHabit: props.onRemoveHabit,
+    onUpdateHabit: props.onUpdateHabit
   }
   
   return (

@@ -17,7 +17,7 @@ export default function HomeScreen(props) {
 
       <AddHabitModal visible={modalVisible} onClose={() => setModalVisible(!modalVisible)} onAddHabit={commonProps.onAddHabit}/>
 
-      <HabitList habits={habits} onRemoveHabit={commonProps.onRemoveHabit}/>
+      <HabitList habits={habits} onRemoveHabit={commonProps.onRemoveHabit} onUpdateHabit={commonProps.onUpdateHabit}/>
 
       <Button onPress={() => setModalVisible(!modalVisible)} title="Add Habit"></Button>
 

@@ -20,6 +20,7 @@ export default function HabitList(props) {
   const habits_length = habits ? habits.length : 0
   const [listData, setListData] = useState()
   const rowTranslateAnimatedValues = {}
+  const onUpdateHabit = props.onUpdateHabit
   Array(habits_length)
     .fill('')
     .forEach((_, i) => {
@@ -35,7 +36,8 @@ export default function HabitList(props) {
   const createListData = habits => {
     setListData(habits.map((habit, index) => ({
       key: `${index}`,
-      title: habit,
+      name: habit.name,
+      completed: habit.completed
     })))
     Array(habits_length)
       .fill('')
@@ -76,12 +78,12 @@ export default function HabitList(props) {
         // ]}
       >
         <TouchableHighlight
-          onPress={() => console.log('You touched me')}
+          onPress={() => onUpdateHabit(props.item.name)}
           style={styles.rowFront}
           underlayColor={'#AAA'}
         >
           <View>
-            <Text>{props.item.title}</Text>
+            <Text>{props.item.name} {props.item.completed ? "completed" : "uncompleted"}</Text>
           </View>
         </TouchableHighlight>
       </Animated.View>
