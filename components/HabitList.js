@@ -67,7 +67,9 @@ export default function HabitList(props) {
   }
 
   const renderItem = props => {
-    console.log(props.item)
+    const completed = props.item.completed
+    var markBackground = completed ? { backgroundColor: props.item.color } : { backgroundColor: 'white' }
+
     return (
       <Animated.View
         // style={[styles.rowFrontContainer, {
@@ -80,11 +82,12 @@ export default function HabitList(props) {
       >
         <TouchableHighlight
           onPress={() => onUpdateHabit(props.item.name)}
-          style={[styles.rowFront, {backgroundColor: props.item.color}]}
+          style={[styles.rowFront]}
           underlayColor={'#AAA'}
         >
-          <View>
-            <Text>{props.item.name} {props.item.completed ? "DONE" : ""}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={completed ? styles.lineThrough : null}>{props.item.name}</Text>
+            <View style={[styles.mark, markBackground, {borderColor: props.item.color}]} />
           </View>
         </TouchableHighlight>
       </Animated.View>
@@ -126,7 +129,6 @@ const styles = StyleSheet.create({
   },
   rowFront: {
     backgroundColor: "white",
-    alignItems: "baseline",
     borderRadius: 5,
     shadowOffset: {
       width: 0,
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     padding: 15,
-    marginVertical: 5
+    marginVertical: 5,
   },
   rowBack: {
     backgroundColor: 'red',
@@ -160,5 +162,14 @@ const styles = StyleSheet.create({
   backRightBtnRight: {
     backgroundColor: 'red',
     right: 0,
+  },
+  mark: {
+    width: 25,
+    height: 25,
+    borderRadius: 50,
+    borderWidth: 1
+  },
+  lineThrough: {
+    textDecorationLine: 'line-through'
   },
 })
