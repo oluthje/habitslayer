@@ -38,11 +38,13 @@ export default function App() {
     }
   }
 
-  const addHabit = (name) => {
+  const addHabit = (name, color) => {
     let habit = {
       name: name,
-      dates_completed: []
+      dates_completed: [],
+      color: color
     }
+    console.log(habit)
     setHabits([...habits, habit])
     saveHabits([...habits, habit])
   }

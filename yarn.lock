@@ -5105,6 +5105,11 @@
   optionalDependencies:
     "moment" "^2.24.0"
 
+"react-native-color-palette@^2.2.0":
+  "integrity" "sha512-5sAh7veeSMg7KOijnBTj4/A54JzfFfOjo7r9YYCnEF9HWgpMHr6oSjERM18qzP561FFVMElVOh3nCit1pvq6xQ=="
+  "resolved" "https://registry.npmjs.org/react-native-color-palette/-/react-native-color-palette-2.2.0.tgz"
+  "version" "2.2.0"
+
 "react-native-gesture-handler@*", "react-native-gesture-handler@~1.10.2":
   "integrity" "sha512-cBGMi1IEsIVMgoox4RvMx7V2r6bNKw0uR1Mu1o7NbuHS6BRSVLq0dP34l2ecnPlC+jpWd3le6Yg1nrdCjby2Mw=="
   "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz"

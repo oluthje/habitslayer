@@ -37,7 +37,8 @@ export default function HabitList(props) {
     setListData(habits.map((habit, index) => ({
       key: `${index}`,
       name: habit.name,
-      completed: habit.dates_completed.includes(props.date)
+      completed: habit.dates_completed.includes(props.date),
+      color: habit.color
     })))
     Array(habits_length)
       .fill('')
@@ -60,13 +61,13 @@ export default function HabitList(props) {
         newData.splice(prevIndex, 1)
         setListData(newData)
         animationIsRunning = false
-        
         props.onRemoveHabit(habits[prevIndex])
       })
     }
   }
 
   const renderItem = props => {
+    console.log(props.item)
     return (
       <Animated.View
         // style={[styles.rowFrontContainer, {
@@ -79,7 +80,7 @@ export default function HabitList(props) {
       >
         <TouchableHighlight
           onPress={() => onUpdateHabit(props.item.name)}
-          style={styles.rowFront}
+          style={[styles.rowFront, {backgroundColor: props.item.color}]}
           underlayColor={'#AAA'}
         >
           <View>
