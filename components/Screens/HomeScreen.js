@@ -16,6 +16,8 @@ export default function HomeScreen(props) {
         date={commonProps.date}
         onRemoveHabit={commonProps.onRemoveHabit}
         onUpdateHabit={commonProps.onUpdateHabit}
+        habitDeletion={false}
+        habitCompletion={true}
       />
       <CalendarView
         habits={habits}

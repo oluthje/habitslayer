@@ -15,23 +15,32 @@ import HabitChecker from "../components/HabitChecker"
 import { SwipeListView } from 'react-native-swipe-list-view'
 
 export default function HabitList(props) {
-  var animationIsRunning = false
+  console.log(props.habits)
+  const [listData, setListData] = useState()
+  const [selectedHabit, setSelectedHabit] = useState()
+  const habitDeletion = props.habitDeletion
+  const habitCompletion = props.habitCompletion
   const habits = props.habits
   const habits_length = habits ? habits.length : 0
-  const [listData, setListData] = useState()
   const rowTranslateAnimatedValues = {}
-  const onUpdateHabit = props.onUpdateHabit
   Array(habits_length)
     .fill('')
     .forEach((_, i) => {
         rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1)
     })
+  var animationIsRunning = false
 
   useEffect(() => {
     if (habits) {
       createListData(habits)
     }
   }, [habits, props.date])
+
+  useEffect(() => {
+    if (habits.length > 0 && !selectedHabit) {
+      setSelectedHabit(habits[0].name)
+    }
+  }, [habits])
 
   const createListData = habits => {
     setListData(habits.map((habit, index) => ({
@@ -49,7 +58,7 @@ export default function HabitList(props) {
 
   const onSwipeValueChange = swipeData => {
     const { key, value } = swipeData
-    if (value < -Dimensions.get('window').width && !animationIsRunning) {
+    if (value < -Dimensions.get('window').width && !animationIsRunning && habitDeletion) {
       animationIsRunning = true
       Animated.timing(rowTranslateAnimatedValues[key], {
         toValue: 0,
@@ -66,9 +75,22 @@ export default function HabitList(props) {
     }
   }
 
+  const onUpdateHabit = name => {
+    if (habitCompletion) {
+      props.onUpdateHabit(name)
+    } else {
+      setSelectedHabit(name)
+      console.log("selected " + name)
+    }
+  }
+
   const renderItem = props => {
     const completed = props.item.completed
     var markBackground = completed ? { backgroundColor: props.item.color } : { backgroundColor: 'white' }
+    var color = 'white'
+    if (selectedHabit == props.item.name && !habitCompletion) {
+      color = props.item.color
+    }
 
     return (
       <Animated.View
@@ -82,15 +104,23 @@ export default function HabitList(props) {
       >
         <TouchableHighlight
           onPress={() => onUpdateHabit(props.item.name)}
-          style={[styles.rowFront]}
+          style={[styles.rowFront, {backgroundColor: color}]}
           underlayColor={'#AAA'}
         >
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={completed ? styles.lineThrough : null}>{props.item.name}</Text>
-            <View style={[styles.mark, markBackground, {borderColor: props.item.color}]} />
+            {habitCompletion ? <CompletionMark
+              backgroundColor={markBackground}
+              color={props.item.color} />: null }
           </View>
         </TouchableHighlight>
       </Animated.View>
+    )
+  }
+
+  const CompletionMark = (props) => {
+    return (
+      <View style={[styles.mark, props.backgroundColor, {borderColor: props.color}]} />
     )
   }
 
@@ -108,6 +138,7 @@ export default function HabitList(props) {
     <View style={styles.container}>
       <SwipeListView
         disableRightSwipe
+        disableLeftSwipe={!habitDeletion}
         data={listData}
         renderItem={renderItem}
         renderHiddenItem={renderHiddenItem}
@@ -139,6 +170,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     padding: 15,
     marginVertical: 5,
+    height: 55,
   },
   rowBack: {
     backgroundColor: 'red',

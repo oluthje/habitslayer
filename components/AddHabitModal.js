@@ -1,6 +1,17 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, Modal, Pressable, TextInput, Alert, Button } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+  TextInput,
+  Alert,
+  Button,
+} from 'react-native'
 import ColorPalette from 'react-native-color-palette'
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures'
 
 export default function AddHabitModal(props) {
   const colors = ['#9B59B6', '#3498DB', '#2ECC71', '#F1C40F', "#E67E22", "#E74C3C"]
@@ -37,28 +48,33 @@ export default function AddHabitModal(props) {
 
   return (
     <View>
-      <Modal
-        presentationStyle={'pageSheet'}
-        animationType="slide"
-        visible={visible}
+      <GestureRecognizer
+        style={{flex: 1}}
+        onSwipeDown={() => close()}
       >
-        <View style={styles.titleView}>
-          <Button title="Cancel" onPress={() => close()} />
-          <Text style={styles.titleText}>New Habit</Text>
-          <Button title="Add Habit" onPress={() => addHabit()} />
-        </View>
-        <View style={styles.centeredView}>
-          <View>
-            <TextInput
-              style={styles.input}
-              onChangeText={setText}
-              value={text}
-              placeholder="Enter a habit"
-            />
-            <ControlledColorPicker color={color} setColor={setColor} />
+        <Modal
+          presentationStyle={'pageSheet'}
+          animationType="slide"
+          visible={visible}
+        >
+          <View style={styles.titleView}>
+            <Button title="Cancel" onPress={() => close()} />
+            <Text style={styles.titleText}>New Habit</Text>
+            <Button title="Add Habit" onPress={() => addHabit()} />
           </View>
-        </View>
-      </Modal>
+          <View style={styles.centeredView}>
+            <View>
+              <TextInput
+                style={styles.input}
+                onChangeText={setText}
+                value={text}
+                placeholder="Enter a habit"
+              />
+              <ControlledColorPicker color={color} setColor={setColor} />
+            </View>
+          </View>
+        </Modal>
+      </GestureRecognizer>
     </View>
   )
 }

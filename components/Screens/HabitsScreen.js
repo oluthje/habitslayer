@@ -16,7 +16,12 @@ export default function HabitsScreen(props) {
 
       <AddHabitModal visible={modalVisible} onClose={() => setModalVisible(!modalVisible)} onAddHabit={commonProps.onAddHabit}/>
 
-      <HabitList habits={habits} onRemoveHabit={commonProps.onRemoveHabit}/>
+      <HabitList
+        habits={habits}
+        onRemoveHabit={commonProps.onRemoveHabit}
+        habitDeletion={true}
+        habitCompletion={false}
+      />
 
       <Button onPress={() => setModalVisible(!modalVisible)} title="Add Habit"></Button>
     </View>
