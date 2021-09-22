@@ -15,9 +15,7 @@ import HabitChecker from "../components/HabitChecker"
 import { SwipeListView } from 'react-native-swipe-list-view'
 
 export default function HabitList(props) {
-  console.log(props.habits)
   const [listData, setListData] = useState()
-  const [selectedHabit, setSelectedHabit] = useState()
   const habitDeletion = props.habitDeletion
   const habitCompletion = props.habitCompletion
   const habits = props.habits
@@ -37,8 +35,8 @@ export default function HabitList(props) {
   }, [habits, props.date])
 
   useEffect(() => {
-    if (habits.length > 0 && !selectedHabit) {
-      setSelectedHabit(habits[0].name)
+    if (habits.length > 0 && !habitCompletion) {
+      props.setSelectedHabit(habits[0].name)
     }
   }, [habits])
 
@@ -79,17 +77,16 @@ export default function HabitList(props) {
     if (habitCompletion) {
       props.onUpdateHabit(name)
     } else {
-      setSelectedHabit(name)
-      console.log("selected " + name)
+      props.setSelectedHabit(name)
     }
   }
 
-  const renderItem = props => {
-    const completed = props.item.completed
-    var markBackground = completed ? { backgroundColor: props.item.color } : { backgroundColor: 'white' }
+  const renderItem = itemProps => {
+    const completed = itemProps.item.completed
+    var markBackground = completed ? { backgroundColor: itemProps.item.color } : { backgroundColor: 'white' }
     var color = 'white'
-    if (selectedHabit == props.item.name && !habitCompletion) {
-      color = props.item.color
+    if (props.selectedHabit == itemProps.item.name && !habitCompletion) {
+      color = itemProps.item.color
     }
 
     return (
@@ -103,15 +100,15 @@ export default function HabitList(props) {
         // ]}
       >
         <TouchableHighlight
-          onPress={() => onUpdateHabit(props.item.name)}
+          onPress={() => onUpdateHabit(itemProps.item.name)}
           style={[styles.rowFront, {backgroundColor: color}]}
           underlayColor={'#AAA'}
         >
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={completed ? styles.lineThrough : null}>{props.item.name}</Text>
+            <Text style={completed ? styles.lineThrough : null}>{itemProps.item.name}</Text>
             {habitCompletion ? <CompletionMark
               backgroundColor={markBackground}
-              color={props.item.color} />: null }
+              color={itemProps.item.color} />: null }
           </View>
         </TouchableHighlight>
       </Animated.View>
